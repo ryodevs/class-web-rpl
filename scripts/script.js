@@ -217,12 +217,11 @@
   $('#contactForm').addEventListener('submit', e => {
     e.preventDefault();
     const nama = $('#cfNama').value.trim();
-    $('#formMsg').textContent = 'Terima kasih, ' + (nama || 'teman') + '! Pesanmu tercatat (demo — hubungkan ke backend/WA untuk produksi). ✅';
+    showToast('Terima kasih, ' + (nama || 'teman') + '! Pesanmu tercatat (demo — hubungkan ke backend/WA untuk produksi).', 'success', 5000);
     e.target.reset();
-    setTimeout(() => $('#formMsg').textContent = '', 5000);
   });
-  $('#waLink').addEventListener('click', e => { e.preventDefault(); alert('Ganti href tombol ini dengan link invite Grup WA kelas.'); });
-  $('#ghLink').addEventListener('click', e => { e.preventDefault(); alert('Ganti href dengan URL organisasi GitHub kelas.'); });
+  $('#waLink').addEventListener('click', e => { e.preventDefault(); showToast('Ganti href tombol ini dengan link invite Grup WA kelas.', 'info'); });
+  $('#ghLink').addEventListener('click', e => { e.preventDefault(); showToast('Ganti href dengan URL organisasi GitHub kelas.', 'info'); });
 
   /* ---------- Back to top + footer year ---------- */
   const toTop = $('#toTop');
@@ -230,5 +229,45 @@
   toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   $('#year').textContent = new Date().getFullYear();
 
+  // Toast Notification System
+const showToast = (message, type = 'info', duration = 3000) => {
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <div class="toast-content">${message}</div>
+    <button class="toast-close" aria-label="Close">✕</button>
+  `;
+  
+  document.body.appendChild(toast);
+  
+  // Close button
+  toast.querySelector('.toast-close').addEventListener('click', () => {
+    toast.classList.add('exiting');
+    toast.addEventListener('animationend', () => {
+      if (toast.parentNode) toast.remove();
+    });
+  });
+  
+  // Auto-remove
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.classList.add('exiting');
+      toast.addEventListener('animationend', () => {
+        if (toast.parentNode) toast.remove();
+      });
+    }
+  }, duration);
+};
+
+// Utility for loading states
+const setLoadingState = (element, isLoading) => {
+  if (isLoading) {
+    element.classList.add('loading');
+    element.setAttribute('aria-busy', 'true');
+  } else {
+    element.classList.remove('loading');
+    element.removeAttribute('aria-busy');
+  }
+};
   console.log('AetherCode TRPL 1A loaded ✅');
 })();
