@@ -1,15 +1,18 @@
+/* AetherCode TRPL 1A — Clean Light Kampus theme */
 :root {
-  /* Structural variables */
   --bg: #f6f8fc;
   --bg-soft: #ffffff;
   --bg-alt: #eef2f9;
   --text: #0f1f3d;
   --muted: #5b6b8c;
   --line: #e2e8f5;
+  --primary: #1a56db;
+  --primary-dark: #0f3aa8;
   --navy: #0f2a5a;
---primary: var(--color-primary);
---primary-dark: var(--color-primary-dark);
-  
+  --accent: #f59e0b;
+  --green: #059669;
+  --card-shadow: 0 10px 30px rgba(15, 42, 90, 0.08);
+  --radius: 12px;
   /* Design System Tokens */
   --font-size-2xs: 0.75rem;
   --font-size-xs: 0.875rem;
@@ -32,6 +35,8 @@
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -56,10 +61,23 @@
   --color-primary-focus: rgba(26, 86, 219, 0.25);
 }
 [data-theme="dark"] {
+  --bg: #070d1f;
+  --bg-soft: #0d1730;
+  --bg-alt: #0a1226;
+  --text: #e8eefc;
+  --muted: #9aa9c7;
+  --line: #1d2c4f;
+  --primary: #5b8cff;
+  --primary-dark: #3b6fe0;
+  --navy: #e8eefc;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   --color-primary: #5b8cff;
   --color-primary-dark: #3b6fe0;
   --color-primary-light: #5b8cff;
   --color-success: #059669;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
