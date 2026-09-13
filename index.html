@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TRPL 1A • AetherCode — Website Kelas</title>
+  <meta name="description" content="Website resmi kelas TRPL 1A AetherCode — materi, tugas, jadwal, galeri, dan anggota kelas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <a href="#home" class="logo" aria-label="AetherCode Home">
+      <span class="logo-mark">&lt;/&gt;</span>
+      <span class="logo-text">Aether<b>Code</b> <small>TRPL&nbsp;1A</small></span>
+    </a>
+    <nav id="navMenu" aria-label="Navigasi utama">
+      <a href="#home" class="active">Beranda</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#materi">Materi</a>
+      <a href="#tugas">Tugas</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#jadwal">Jadwal</a>
+      <a href="#anggota">Anggota</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Mode gelap / terang">🌙</button>
+      <button class="hamburger" id="hamburger" aria-label="Buka menu">☰</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <p class="badge"><span class="pulse"></span> TRPL 1A • ANGKATAN 2026 • AKTIF</p>
+      <h1>Kelas <span class="grad">AetherCode</span><br />Teknologi Rekayasa<br />Perangkat Lunak 1A</h1>
+      <p class="subtitle">Belajar rapi • Ngoding bersih • Kolaborasi solid — website resmi untuk materi, tugas, jadwal & dokumentasi kelas.</p>
+      <div class="hero-btn">
+        <a href="#materi" class="btn primary">📚 Lihat Materi</a>
+        <a href="#anggota" class="btn outline">👥 Anggota Kelas</a>
+        <a href="#tugas" class="btn ghost">⏳ Deadline Tugas</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong data-count="32">32</strong><span>Mahasiswa</span></div>
+        <div class="stat"><strong data-count="6">6</strong><span>Modul Materi</span></div>
+        <div class="stat"><strong data-count="5">5</strong><span>Tugas Aktif</span></div>
+        <div class="stat"><strong data-count="12">12</strong><span>Dokumentasi</span></div>
+      </div>
+    </div>
+    <div class="hero-card" aria-hidden="true">
+      <div class="code-window">
+        <div class="code-bar"><i></i><i></i><i></i><span>aethercode — trpl-1a.js</span></div>
+<pre><code><span class="k">const</span> <span class="v">kelas</span> = {
+  nama: <span class="s">"AetherCode"</span>,
+  prodi: <span class="s">"TRPL 1A"</span>,
+  fokus: [<span class="s">"Web"</span>, <span class="s">"Software"</span>, <span class="s">" teamwork "</span>],
+  semangat: <span class="s">"Belajar • Ngoding • Berkolaborasi"</span>
+};
+<span class="k">export default</span> kelas;</code></pre>
+        <div class="deadline-chip">⏳ Deadline terdekat: <b id="heroDeadline">—</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TENTANG -->
+  <section id="tentang" class="section reveal">
+    <p class="eyebrow">Tentang Kelas</p>
+    <h2>Solid, Rapi, & Siap Industri 🚀</h2>
+    <p class="lead">AetherCode adalah nama angkatan kelas TRPL 1A — gabungan kata <i>Aether</i> (ruang tanpa batas) dan <i>Code</i>. Target kami: lulus dengan portofolio nyata, bukan sekadar nilai.</p>
+    <div class="cards-3">
+      <div class="info-card">
+        <div class="icon">🎯</div>
+        <h3>Visi</h3>
+        <p>Menjadi kelas TRPL yang unggul dalam rekayasa perangkat lunak, disiplin, dan kolaborasi proyek nyata.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">🛠️</div>
+        <h3>Misi</h3>
+        <p>Belajar konsisten tiap minggu, dokumentasikan semua praktikum, dan bangun 3 proyek kelas dalam 1 semester.</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">🤝</div>
+        <h3>Budaya</h3>
+        <p>Saling review kode, piket tepat waktu, tidak ada yang tertinggal — semua naik kelas bareng-bareng.</p>
+      </div>
+    </div>
+    <div class="pengurus">
+      <div class="pengurus-item"><span class="avatar">👩‍🏫</span><div><strong>Ibu Ratna Sari, M.Kom.</strong><small>Dosen Wali</small></div></div>
+      <div class="pengurus-item"><span class="avatar">🧑‍💼</span><div><strong>Rizky Pratama</strong><small>Ketua Kelas</small></div></div>
+      <div class="pengurus-item"><span class="avatar">📝</span><div><strong>Salsabila Zahra</strong><small>Sekretaris</small></div></div>
+      <div class="pengurus-item"><span class="avatar">💰</span><div><strong>Dimas Arya</strong><small>Bendahara</small></div></div>
+    </div>
+  </section>
+
+  <!-- MATERI -->
+  <section id="materi" class="section alt reveal">
+    <p class="eyebrow">Arsip Belajar</p>
+    <h2>Materi Pembelajaran</h2>
+    <p class="lead center">Klik kartu untuk menandai selesai. Progress tersimpan otomatis di browser.</p>
+    <div class="filter-row" role="tablist" aria-label="Filter materi">
+      <button class="chip active" data-filter="all">Semua</button>
+      <button class="chip" data-filter="frontend">Frontend</button>
+      <button class="chip" data-filter="backend">Backend</button>
+      <button class="chip" data-filter="tools">Tools</button>
+    </div>
+    <div class="materi-progress">
+      <div class="materi-progress-top"><span>Progress kelas</span><span id="materiPct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="materiFill" style="width:0%"></div></div>
+    </div>
+    <div class="cards" id="materiGrid">
+      <article class="card materi" data-cat="frontend" data-id="m1">
+        <span class="tag">Frontend</span>
+        <h3>🌐 HTML & CSS Dasar</h3>
+        <p>Struktur semantik, Flexbox, Grid, dan responsive layout mobile-first.</p>
+        <div class="meta"><span>📄 8 modul</span><span>⏱ 4 jam</span></div>
+        <button class="done-btn">Tandai selesai ✓</button>
+      </article>
+      <article class="card materi" data-cat="frontend" data-id="m2">
+        <span class="tag">Frontend</span>
+        <h3>⚡ JavaScript Interaktif</h3>
+        <p>DOM, event, fetch API, localStorage, dan validasi form.</p>
+        <div class="meta"><span>📄 10 modul</span><span>⏱ 6 jam</span></div>
+        <button class="done-btn">Tandai selesai ✓</button>
+      </article>
+      <article class="card materi" data-cat="backend" data-id="m3">
+        <span class="tag">Backend</span>
+        <h3>🐘 PHP & MySQL</h3>
+        <p>CRUD, session login, prepared statement, dan relasi tabel.</p>
+        <div class="meta"><span>📄 9 modul</span><span>⏱ 6 jam</span></div>
+        <button class="done-btn">Tandai selesai ✓</button>
+      </article>
+      <article class="card materi" data-cat="backend" data-id="m4">
+        <span class="tag">Backend</span>
+        <h3>🧱 PBO & OOP</h3>
+        <p>Class, object, inheritance, polymorphism studi kasus proyek kampus.</p>
+        <div class="meta"><span>📄 6 modul</span><span>⏱ 4 jam</span></div>
+        <button class="done-btn">Tandai selesai ✓</button>
+      </article>
+      <article class="card materi" data-cat="tools" data-id="m5">
+        <span class="tag">Tools</span>
+        <h3>🔧 Git & GitHub</h3>
+        <p>Branch, pull request, code review, dan kolaborasi tim AetherCode.</p>
+        <div class="meta"><span>📄 5 modul</span><span>⏱ 3 jam</span></div>
+        <button class="done-btn">Tandai selesai ✓</button>
+      </article>
+      <article class="card materi" data-cat="tools" data-id="m6">
+        <span class="tag">Tools</span>
+        <h3>🎨 Tailwind & Deploy</h3>
+        <p>Utility-first CSS, build project, dan deploy ke Netlify / Vercel.</p>
+        <div class="meta"><span>📄 4 modul</span><span>⏱ 3 jam</span></div>
+        <button class="done-btn">Tandai selesai ✓</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- TUGAS -->
+  <section id="tugas" class="section reveal">
+    <p class="eyebrow">Jangan sampai telat</p>
+    <h2>Tugas & Deadline ⏳</h2>
+    <div class="countdown-box">
+      <div><small>Deadline terdekat</small><strong id="nextTaskName">—</strong></div>
+      <div class="countdown" id="countdown">
+        <div><b id="cdD">0</b><span>Hari</span></div>
+        <div><b id="cdH">0</b><span>Jam</span></div>
+        <div><b id="cdM">0</b><span>Mnt</span></div>
+        <div><b id="cdS">0</b><span>Dtk</span></div>
+      </div>
+    </div>
+    <div class="task-list" id="taskList">
+      <label class="task" data-deadline="2026-09-20T23:59:00">
+        <input type="checkbox" data-task="t1" />
+        <span class="checkmark"></span>
+        <div class="task-body"><strong>Landing page kelas (HTML+CSS)</strong><small>Pemrograman Web • Kelompok 2 orang</small></div>
+        <span class="due">20 Sep 2026</span>
+      </label>
+      <label class="task" data-deadline="2026-09-25T23:59:00">
+        <input type="checkbox" data-task="t2" />
+        <span class="checkmark"></span>
+        <div class="task-body"><strong>ERD + CRUD Basis Data Perpustakaan</strong><small>Basis Data • Individu</small></div>
+        <span class="due">25 Sep 2026</span>
+      </label>
+      <label class="task" data-deadline="2026-09-28T23:59:00">
+        <input type="checkbox" data-task="t3" />
+        <span class="checkmark"></span>
+        <div class="task-body"><strong>Program kasir OOP (Java/PHP)</strong><small>PBO • Individu</small></div>
+        <span class="due">28 Sep 2026</span>
+      </label>
+      <label class="task" data-deadline="2026-10-02T23:59:00">
+        <input type="checkbox" data-task="t4" />
+        <span class="checkmark"></span>
+        <div class="task-body"><strong>Proposal Proyek Kreatif AetherCode</strong><small>PKK • Kelompok 4 orang</small></div>
+        <span class="due">02 Okt 2026</span>
+      </label>
+      <label class="task" data-deadline="2026-10-06T23:59:00">
+        <input type="checkbox" data-task="t5" />
+        <span class="checkmark"></span>
+        <div class="task-body"><strong>Presentasi Git workflow + repo kelas</strong><small>Projek Kreatif • Kelompok</small></div>
+        <span class="due">06 Okt 2026</span>
+      </label>
+    </div>
+    <p class="hint">✅ Centang tugas yang selesai — status tersimpan otomatis.</p>
+  </section>
+
+  <!-- GALERI -->
+  <section id="galeri" class="section alt reveal">
+    <p class="eyebrow">Dokumentasi</p>
+    <h2>Galeri AetherCode 📸</h2>
+    <div class="filter-row">
+      <button class="chip active" data-gfilter="all">Semua</button>
+      <button class="chip" data-gfilter="praktikum">Praktikum</button>
+      <button class="chip" data-gfilter="acara">Acara</button>
+      <button class="chip" data-gfilter="proyek">Proyek</button>
+    </div>
+    <div class="gallery" id="galleryGrid">
+      <figure class="g-item" data-gcat="praktikum"><div class="g-thumb g1"><span>💻</span></div><figcaption>Praktikum Web — Lab 2</figcaption></figure>
+      <figure class="g-item" data-gcat="acara"><div class="g-thumb g2"><span>🎉</span></div><figcaption>Makrab TRPL 1A 2026</figcaption></figure>
+      <figure class="g-item" data-gcat="proyek"><div class="g-thumb g3"><span>🚀</span></div><figcaption>Demo Proyek Semester 1</figcaption></figure>
+      <figure class="g-item" data-gcat="praktikum"><div class="g-thumb g4"><span>🗄️</span></div><figcaption>Workshop Database MySQL</figcaption></figure>
+      <figure class="g-item" data-gcat="acara"><div class="g-thumb g5"><span>⚽</span></div><figcaption>Futsal Antar Kelas</figcaption></figure>
+      <figure class="g-item" data-gcat="proyek"><div class="g-thumb g6"><span>🎨</span></div><figcaption>Pameran UI/UX Kelas</figcaption></figure>
+    </div>
+    <p class="hint">💡 Ganti emoji & caption di <code>index.html</code> dengan foto asli (taruh di folder <code>assets/</code> lalu pakai <code>&lt;img&gt;</code>).</p>
+  </section>
+
+  <!-- JADWAL -->
+  <section id="jadwal" class="section reveal">
+    <p class="eyebrow">Rutinitas</p>
+    <h2>Jadwal Kuliah & Piket 🗓️</h2>
+    <div class="jadwal-grid">
+      <div class="table-wrap">
+        <h3>📘 Jadwal Kuliah</h3>
+        <table>
+          <thead><tr><th>Hari</th><th>Mata Kuliah</th><th>Jam</th><th>Ruang</th></tr></thead>
+          <tbody>
+            <tr><td><b>Senin</b></td><td>Pemrograman Web</td><td>07:00 – 10:00</td><td>Lab 2</td></tr>
+            <tr><td><b>Selasa</b></td><td>Basis Data</td><td>07:00 – 10:00</td><td>R-301</td></tr>
+            <tr><td><b>Rabu</b></td><td>PBO</td><td>07:00 – 09:30</td><td>Lab 1</td></tr>
+            <tr><td><b>Kamis</b></td><td>PKK</td><td>07:00 – 10:00</td><td>R-205</td></tr>
+            <tr><td><b>Jumat</b></td><td>Projek Kreatif</td><td>07:00 – 09:00</td><td>Lab 2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <h3>🧹 Jadwal Piket</h3>
+        <table>
+          <thead><tr><th>Hari</th><th>Kelompok</th><th>Anggota</th></tr></thead>
+          <tbody>
+            <tr><td><b>Senin</b></td><td>Kel. 1</td><td>Rizky, Salsa, Dimas, Putri</td></tr>
+            <tr><td><b>Selasa</b></td><td>Kel. 2</td><td>Bagas, Nabila, Fajar, Intan</td></tr>
+            <tr><td><b>Rabu</b></td><td>Kel. 3</td><td>Yoga, Dewi, Aldi, Kirana</td></tr>
+            <tr><td><b>Kamis</b></td><td>Kel. 4</td><td>Ilham, Anisa, Reza, Wulan</td></tr>
+            <tr><td><b>Jumat</b></td><td>Kel. 5</td><td>Farhan, Tiara, Galih, Ayu</td></tr>
+          </tbody>
+        </table>
+        <p class="hint">Hari ini piket: <b id="piketToday">—</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANGGOTA -->
+  <section id="anggota" class="section alt reveal">
+    <p class="eyebrow">Keluarga besar</p>
+    <h2>Anggota Kelas — 32 Orang 👥</h2>
+    <div class="search-row">
+      <input type="search" id="searchAnggota" placeholder="🔍 Cari nama / peran..." autocomplete="off" />
+      <span class="count-pill" id="anggotaCount">32 orang</span>
+    </div>
+    <div class="cards" id="anggotaList"></div>
+    <div class="add-box">
+      <input type="text" id="namaInput" placeholder="Tambah nama anggota baru..." maxlength="40" />
+      <select id="peranInput" aria-label="Peran">
+        <option value="Anggota">Anggota</option>
+        <option value="Ketua Kelas">Ketua Kelas</option>
+        <option value="Sekretaris">Sekretaris</option>
+        <option value="Bendahara">Bendahara</option>
+        <option value="Koordinator">Koordinator</option>
+      </select>
+      <button id="btnTambah" type="button">＋ Tambah</button>
+    </div>
+    <p class="hint">Data tambahan tersimpan di browser (localStorage). Klik ✕ untuk menghapus anggota tambahan.</p>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak" class="section reveal">
+    <p class="eyebrow">Hubungi kami</p>
+    <h2>Kontak Kelas 📬</h2>
+    <div class="cards-3">
+      <div class="info-card"><div class="icon">📧</div><h3>Email</h3><p>aethercode.trpl1a@kampus.ac.id</p></div>
+      <div class="info-card"><div class="icon">💬</div><h3>Grup WA</h3><p><a href="#" id="waLink">Gabung Grup Kelas →</a></p></div>
+      <div class="info-card"><div class="icon">🐙</div><h3>GitHub</h3><p><a href="#" id="ghLink">github.com/aethercode-trpl1a →</a></p></div>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <h3>Kirim pesan ke pengurus</h3>
+      <div class="form-row">
+        <input type="text" id="cfNama" placeholder="Nama kamu" required />
+        <input type="email" id="cfEmail" placeholder="Email aktif" required />
+      </div>
+      <textarea id="cfPesan" rows="4" placeholder="Tulis pesan / usulan kegiatan..." required></textarea>
+      <button type="submit" class="btn primary">Kirim Pesan ✈️</button>
+      <p class="form-msg" id="formMsg" role="status"></p>
+    </form>
+  </section>
+
+  <footer>
+    <p><b>AetherCode</b> • TRPL 1A • <span id="year">2026</span> — Belajar • Ngoding • Berkolaborasi</p>
+    <p class="foot-sub">Dibuat dengan ♥ oleh kelas TRPL 1A • <a href="#home">Kembali ke atas ↑</a></p>
+  </footer>
+
+  <button id="toTop" aria-label="Kembali ke atas">↑</button>
+  <script src="scripts/script.js"></script>
+</body>
+</html>
