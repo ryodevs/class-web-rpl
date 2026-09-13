@@ -1,18 +1,15 @@
-/* AetherCode TRPL 1A — Clean Light Kampus theme */
 :root {
+  /* Structural variables */
   --bg: #f6f8fc;
   --bg-soft: #ffffff;
   --bg-alt: #eef2f9;
   --text: #0f1f3d;
   --muted: #5b6b8c;
   --line: #e2e8f5;
-  --primary: #1a56db;
-  --primary-dark: #0f3aa8;
   --navy: #0f2a5a;
-  --accent: #f59e0b;
-  --green: #059669;
-  --card-shadow: 0 10px 30px rgba(15, 42, 90, 0.08);
-  --radius: 12px;
+--primary: var(--color-primary);
+--primary-dark: var(--color-primary-dark);
+  
   /* Design System Tokens */
   --font-size-2xs: 0.75rem;
   --font-size-xs: 0.875rem;
@@ -35,8 +32,6 @@
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -47,12 +42,12 @@
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
   --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
   --shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
-  /* Enhanced Color System */
+  /* Color System */
   --color-primary: #1a56db;
   --color-primary-dark: #0f3aa8;
   --color-primary-light: #3b82f6;
   --color-success: #059669;
-  --color-warning: #d97706;
+  --color-warning: #f59e0b;
   --color-error: #dc2626;
   --color-info: #2563eb;
   /* State Colors */
@@ -61,24 +56,10 @@
   --color-primary-focus: rgba(26, 86, 219, 0.25);
 }
 [data-theme="dark"] {
-  --bg: #070d1f;
-  --bg-soft: #0d1730;
-  --bg-alt: #0a1226;
-  --text: #e8eefc;
-  --muted: #9aa9c7;
-  --line: #1d2c4f;
-  --primary: #5b8cff;
-  --primary-dark: #3b6fe0;
-  --navy: #e8eefc;
-  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  /* Design System Tokens - Dark Theme Overrides */
   --color-primary: #5b8cff;
   --color-primary-dark: #3b6fe0;
   --color-primary-light: #5b8cff;
   --color-success: #059669;
-  --color-warning: #d97706;
-  --color-error: #dc2626;
-  --color-info: #2563eb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
@@ -210,8 +191,8 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg-alt); padd
   width: 100%; padding: 9px; border-radius: 8px; border: 1.5px dashed var(--line);
   background: transparent; color: var(--muted); font-weight: 700; cursor: pointer; font-size: 13px;
 }
-.card.done { border-color: var(--green); background: linear-gradient(180deg, rgba(5,150,105,.08), transparent); }
-.card.done .done-btn { background: var(--green); border-color: var(--green); color: #fff; }
+.card.done { border-color: var(--color-success); background: linear-gradient(180deg, rgba(5,150,105,.08), transparent); }
+.card.done .done-btn { background: var(--color-success); border-color: var(--color-success); color: #fff; }
 
 /* Filter chips */
 .filter-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
@@ -247,7 +228,7 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg-alt); padd
 .task:hover { border-color: var(--primary); }
 .task input { display: none; }
 .checkmark { width: 24px; height: 24px; border-radius: 8px; border: 2px solid var(--line); flex-shrink: 0; display: grid; place-items: center; font-size: 15px; }
-.task.checked .checkmark { background: var(--green); border-color: var(--green); color: #fff; }
+.task.checked .checkmark { background: var(--color-success); border-color: var(--color-success); color: #fff; }
 .task.checked .checkmark::after { content: '✓'; }
 .task-body { flex: 1; } .task-body strong { display: block; font-size: 15px; } .task-body small { color: var(--muted); }
 .task.checked .task-body strong { text-decoration: line-through; opacity: .6; }
@@ -324,7 +305,7 @@ tbody tr:hover { background: var(--bg-alt); }
   box-shadow: 0 0 0 3px var(--color-primary-focus);
 }
 .contact-form textarea { margin-bottom: 12px; resize: vertical; }
-.form-msg { margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--green); }
+.form-msg { margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--color-success); }
 
 footer { text-align: center; padding: 26px 16px; background: var(--navy); color: #c9d6f2; font-size: 13px; }
 footer b { color: #fff; } footer a { color: #ffd479; }
