@@ -1,34 +1,49 @@
-// AetherCode TRPL 1A — interactions
+// AetherCode TRPL 1A — interactions (Swiss print build)
 (function () {
   'use strict';
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
-  /* ---------- Theme (dark/light) ---------- */
-  const root = document.documentElement;
-  const themeBtn = $('#themeToggle');
-  const savedTheme = localStorage.getItem('aether-theme');
-  if (savedTheme) root.setAttribute('data-theme', savedTheme);
-  const syncIcon = () => { themeBtn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'; };
-  syncIcon();
-  themeBtn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('aether-theme', next);
-    syncIcon();
-  });
+  /* ---------- Toast (defined early, used by form/links) ---------- */
+  const showToast = (message, type = 'info', duration = 3200) => {
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + type;
+    toast.setAttribute('role', 'status');
+    const body = document.createElement('div');
+    body.className = 'toast-content';
+    body.textContent = message;
+    const close = document.createElement('button');
+    close.className = 'toast-close';
+    close.setAttribute('aria-label', 'Tutup notifikasi');
+    close.textContent = '×';
+    const dismiss = () => {
+      toast.classList.add('exiting');
+      setTimeout(() => { if (toast.parentNode) toast.remove(); }, 260);
+    };
+    close.addEventListener('click', dismiss);
+    toast.append(body, close);
+    document.body.appendChild(toast);
+    setTimeout(() => { if (toast.parentNode) dismiss(); }, duration);
+  };
 
   /* ---------- Navbar mobile + active link ---------- */
   const nav = $('#navMenu');
-  $('#hamburger').addEventListener('click', () => nav.classList.toggle('show'));
+  const burger = $('#hamburger');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('show');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
   const links = $$('#navMenu a');
   links.forEach(l => l.addEventListener('click', () => {
     links.forEach(x => x.classList.remove('active'));
     l.classList.add('active');
     nav.classList.remove('show');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
   }));
   // Scrollspy
-  const sections = ['home','tentang','materi','tugas','galeri','jadwal','anggota','kontak']
+  const sections = ['home', 'tentang', 'materi', 'tugas', 'galeri', 'jadwal', 'anggota', 'kontak']
     .map(id => document.getElementById(id)).filter(Boolean);
   const spy = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -72,7 +87,7 @@
     mCards.forEach(c => {
       const isDone = done.has(c.dataset.id);
       c.classList.toggle('done', isDone);
-      $('.done-btn', c).textContent = isDone ? 'Selesai ✓ — klik untuk batal' : 'Tandai selesai ✓';
+      $('.done-btn', c).textContent = isDone ? 'Selesai — klik untuk batal' : 'Tandai selesai';
     });
     const pct = Math.round((done.size / mCards.length) * 100);
     $('#materiFill').style.width = pct + '%';
@@ -105,9 +120,8 @@
     });
   };
   tasks.forEach(t => t.addEventListener('click', e => {
-    if (e.target.tagName === 'INPUT') return; // biar label toggle alami, kita sinkron setelahnya
+    if (e.target.tagName === 'INPUT') return;
     const inp = $('input', t);
-    // toggle manual karena klik div
     setTimeout(() => {
       inp.checked ? tasksDone.add(inp.dataset.task) : tasksDone.delete(inp.dataset.task);
       localStorage.setItem(taskKey, JSON.stringify([...tasksDone]));
@@ -132,13 +146,13 @@
   function tick() {
     const nxt = nextDeadline();
     if (!nxt) {
-      $('#nextTaskName').textContent = 'Semua tugas selesai 🎉';
-      $('#heroDeadline').textContent = 'tidak ada 🎉';
-      ['cdD','cdH','cdM','cdS'].forEach(id => document.getElementById(id).textContent = '0');
+      $('#nextTaskName').textContent = 'Semua tugas selesai';
+      $('#heroDeadline').textContent = 'Nihil — semua beres';
+      ['cdD', 'cdH', 'cdM', 'cdS'].forEach(id => document.getElementById(id).textContent = '0');
       return;
     }
-    $('#nextTaskName').textContent = nxt.name + ' • ' + nxt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
-    $('#heroDeadline').textContent = nxt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    $('#nextTaskName').textContent = nxt.name + ' / ' + nxt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }).toUpperCase();
+    $('#heroDeadline').textContent = nxt.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
     let diff = nxt.date - new Date();
     const d = Math.floor(diff / 864e5); diff -= d * 864e5;
     const h = Math.floor(diff / 36e5); diff -= h * 36e5;
@@ -148,21 +162,30 @@
   }
   tick(); setInterval(tick, 1000);
 
-  /* ---------- Anggota: 32 dummy + search + tambah ---------- */
-  const AVATARS = ['🧑‍💻','👩‍💻','🧑‍🎓','👩‍🎓','🧑‍🔬','👩‍🔬','🧑‍🎨','👩‍🎨'];
+  /* ---------- Jadwal: highlight hari ini ---------- */
+  const today = new Date().getDay();
+  const row = document.querySelector('#jadwalBody tr[data-day="' + today + '"]');
+  if (row) {
+    row.classList.add('today');
+    const hint = $('#jadwalHint');
+    if (hint) hint.textContent = 'Hari ini: ' + row.cells[1].textContent + ' (' + row.cells[2].textContent + ').';
+  }
+
+  /* ---------- Anggota: 32 data + search + tambah (monogram inisial) ---------- */
   const baseMembers = [
-    ['Rizky Pratama','Ketua Kelas'], ['Salsabila Zahra','Sekretaris'], ['Dimas Arya','Bendahara'],
-    ['Putri Ayu Lestari','Sekretaris'], ['Bagas Nugroho','Koordinator'], ['Nabila Putri','Anggota'],
-    ['Fajar Ramadhan','Anggota'], ['Intan Permata','Anggota'], ['Yoga Saputra','Anggota'],
-    ['Dewi Anggraini','Anggota'], ['Aldi Hermawan','Anggota'], ['Kirana Dewi','Anggota'],
-    ['Ilham Maulana','Anggota'], ['Anisa Rahma','Anggota'], ['Reza Fahlevi','Anggota'],
-    ['Wulan Sari','Anggota'], ['Farhan Aziz','Anggota'], ['Tiara Andini','Anggota'],
-    ['Galih Prasetyo','Anggota'], ['Ayu Wandira','Anggota'], ['Rangga Firmansyah','Anggota'],
-    ['Lutfi Hidayat','Anggota'], ['Mega Lestari','Anggota'], ['Naufal Rizki','Anggota'],
-    ['Olivia Hartono','Anggota'], ['Pandji Kusuma','Anggota'], ['Qori Amelia','Anggota'],
-    ['Raka Aditya','Anggota'], ['Sinta Bella','Anggota'], ['Teguh Santoso','Anggota'],
-    ['Ulfa Mazaya','Anggota'], ['Vino Bastian','Anggota'],
+    ['Rizky Pratama', 'Ketua Kelas'], ['Salsabila Zahra', 'Sekretaris'], ['Dimas Arya', 'Bendahara'],
+    ['Putri Ayu Lestari', 'Sekretaris'], ['Bagas Nugroho', 'Koordinator'], ['Nabila Putri', 'Anggota'],
+    ['Fajar Ramadhan', 'Anggota'], ['Intan Permata', 'Anggota'], ['Yoga Saputra', 'Anggota'],
+    ['Dewi Anggraini', 'Anggota'], ['Aldi Hermawan', 'Anggota'], ['Kirana Dewi', 'Anggota'],
+    ['Ilham Maulana', 'Anggota'], ['Anisa Rahma', 'Anggota'], ['Reza Fahlevi', 'Anggota'],
+    ['Wulan Sari', 'Anggota'], ['Farhan Aziz', 'Anggota'], ['Tiara Andini', 'Anggota'],
+    ['Galih Prasetyo', 'Anggota'], ['Ayu Wandira', 'Anggota'], ['Rangga Firmansyah', 'Anggota'],
+    ['Lutfi Hidayat', 'Anggota'], ['Mega Lestari', 'Anggota'], ['Naufal Rizki', 'Anggota'],
+    ['Olivia Hartono', 'Anggota'], ['Pandji Kusuma', 'Anggota'], ['Qori Amelia', 'Anggota'],
+    ['Raka Aditya', 'Anggota'], ['Sinta Bella', 'Anggota'], ['Teguh Santoso', 'Anggota'],
+    ['Ulfa Mazaya', 'Anggota'], ['Vino Bastian', 'Anggota'],
   ];
+  const initials = (name) => name.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
   const customKey = 'aether-members-custom';
   let custom = JSON.parse(localStorage.getItem(customKey) || '[]');
   const list = $('#anggotaList');
@@ -172,18 +195,27 @@
     const q = filter.trim().toLowerCase();
     const all = [...baseMembers.map(([n, r]) => ({ n, r, custom: false })), ...custom];
     const shown = all.filter(m => (m.n + ' ' + m.r).toLowerCase().includes(q));
-    shown.forEach((m, i) => {
+    shown.forEach((m) => {
       const div = document.createElement('div');
       div.className = 'card member' + (m.custom ? ' custom' : '');
       const star = m.r !== 'Anggota' ? ' star' : '';
-      div.innerHTML =
-        '<button class="del" title="Hapus">✕</button>' +
-        '<div class="m-avatar">' + AVATARS[(m.n.length + i) % AVATARS.length] + '</div>' +
-        '<strong></strong><span class="role' + star + '"></span>';
-      $('strong', div).textContent = m.n;
-      $('.role', div).textContent = m.r;
+      const del = document.createElement('button');
+      del.className = 'del';
+      del.title = 'Hapus';
+      del.setAttribute('aria-label', 'Hapus ' + m.n);
+      del.textContent = '×';
+      const av = document.createElement('div');
+      av.className = 'm-avatar';
+      av.setAttribute('aria-hidden', 'true');
+      av.textContent = initials(m.n);
+      const nm = document.createElement('strong');
+      nm.textContent = m.n;
+      const role = document.createElement('span');
+      role.className = 'role' + star;
+      role.textContent = m.r.toUpperCase();
+      div.append(del, av, nm, role);
       if (m.custom) {
-        $('.del', div).addEventListener('click', () => {
+        del.addEventListener('click', () => {
           custom = custom.filter(x => !(x.n === m.n && x.r === m.r));
           localStorage.setItem(customKey, JSON.stringify(custom));
           renderMembers($('#searchAnggota').value);
@@ -191,7 +223,7 @@
       }
       list.appendChild(div);
     });
-    $('#anggotaCount').textContent = shown.length + ' orang' + (q ? ' • hasil "' + filter.trim() + '"' : '');
+    $('#anggotaCount').textContent = shown.length + ' ORANG' + (q ? ' / "' + filter.trim().toUpperCase() + '"' : '');
   }
   renderMembers();
   $('#searchAnggota').addEventListener('input', e => renderMembers(e.target.value));
@@ -199,75 +231,46 @@
   function tambahAnggota() {
     const input = $('#namaInput'), peran = $('#peranInput').value;
     const nama = input.value.trim();
-    if (!nama) { alert('Isi nama dulu!'); input.focus(); return; }
+    if (!nama) { showToast('Isi nama dulu sebelum menambah.', 'warning'); input.focus(); return; }
     custom.push({ n: nama, r: peran, custom: true });
     localStorage.setItem(customKey, JSON.stringify(custom));
     input.value = ''; input.focus();
     renderMembers($('#searchAnggota').value);
+    showToast('Anggota baru tercatat: ' + nama, 'success');
   }
   $('#btnTambah').addEventListener('click', tambahAnggota);
   $('#namaInput').addEventListener('keydown', e => { if (e.key === 'Enter') tambahAnggota(); });
-  window.tambahAnggota = tambahAnggota; // kompatibel dgn onclick lama
 
-  /* ---------- Piket hari ini ---------- */
-  const piket = { 1: 'Kel. 1 (Senin)', 2: 'Kel. 2 (Selasa)', 3: 'Kel. 3 (Rabu)', 4: 'Kel. 4 (Kamis)', 5: 'Kel. 5 (Jumat)', 6: 'Libur 🎉', 0: 'Libur 🎉' };
-  $('#piketToday').textContent = piket[new Date().getDay()];
-
-  /* ---------- Form kontak (demo) ---------- */
+  /* ---------- Form kontak: validasi inline ---------- */
+  const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   $('#contactForm').addEventListener('submit', e => {
     e.preventDefault();
     const nama = $('#cfNama').value.trim();
-    showToast('Terima kasih, ' + (nama || 'teman') + '! Pesanmu tercatat (demo — hubungkan ke backend/WA untuk produksi).', 'success', 5000);
+    const email = $('#cfEmail').value.trim();
+    const pesan = $('#cfPesan').value.trim();
+    let valid = true;
+    const setErr = (id, msg) => {
+      document.querySelector('[data-err="' + id + '"]').textContent = msg || '';
+      if (msg) valid = false;
+    };
+    setErr('cfNama', nama ? '' : 'Nama wajib diisi.');
+    setErr('cfEmail', !email ? 'Email wajib diisi.' : (!emailOk(email) ? 'Format email tidak valid.' : ''));
+    setErr('cfPesan', pesan.length < 10 ? 'Pesan minimal 10 karakter.' : '');
+    const msg = $('#formMsg');
+    if (!valid) { msg.textContent = ''; msg.classList.remove('ok'); return; }
+    msg.textContent = 'Tercatat. Terima kasih, ' + nama + ' — pesan diteruskan ke pengurus (mode demo).';
+    msg.classList.add('ok');
+    showToast('Pesan terkirim ke pengurus.', 'success');
     e.target.reset();
   });
-  $('#waLink').addEventListener('click', e => { e.preventDefault(); showToast('Ganti href tombol ini dengan link invite Grup WA kelas.', 'info'); });
+  $('#waLink').addEventListener('click', e => { e.preventDefault(); showToast('Ganti href tombol ini dengan link invite grup WA kelas.', 'info'); });
   $('#ghLink').addEventListener('click', e => { e.preventDefault(); showToast('Ganti href dengan URL organisasi GitHub kelas.', 'info'); });
 
   /* ---------- Back to top + footer year ---------- */
   const toTop = $('#toTop');
-  window.addEventListener('scroll', () => toTop.classList.toggle('show', window.scrollY > 500));
+  window.addEventListener('scroll', () => toTop.classList.toggle('show', window.scrollY > 500), { passive: true });
   toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   $('#year').textContent = new Date().getFullYear();
 
-  // Toast Notification System
-const showToast = (message, type = 'info', duration = 3000) => {
-  const toast = document.createElement('div');
-  toast.className = `toast toast-${type}`;
-  toast.innerHTML = `
-    <div class="toast-content">${message}</div>
-    <button class="toast-close" aria-label="Close">✕</button>
-  `;
-  
-  document.body.appendChild(toast);
-  
-  // Close button
-  toast.querySelector('.toast-close').addEventListener('click', () => {
-    toast.classList.add('exiting');
-    toast.addEventListener('animationend', () => {
-      if (toast.parentNode) toast.remove();
-    });
-  });
-  
-  // Auto-remove
-  setTimeout(() => {
-    if (toast.parentNode) {
-      toast.classList.add('exiting');
-      toast.addEventListener('animationend', () => {
-        if (toast.parentNode) toast.remove();
-      });
-    }
-  }, duration);
-};
-
-// Utility for loading states
-const setLoadingState = (element, isLoading) => {
-  if (isLoading) {
-    element.classList.add('loading');
-    element.setAttribute('aria-busy', 'true');
-  } else {
-    element.classList.remove('loading');
-    element.removeAttribute('aria-busy');
-  }
-};
-  console.log('AetherCode TRPL 1A loaded ✅');
+  console.log('AetherCode TRPL 1A loaded.');
 })();
